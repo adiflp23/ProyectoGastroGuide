@@ -4,7 +4,11 @@
  */
 package clases;
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +21,45 @@ public class ConsultarHorarioAdmin extends javax.swing.JFrame {
      */
     public ConsultarHorarioAdmin() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        mostrardatos();
+    }
+
+    public void mostrardatos() {
+
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            tablaHorario.setModel(modelo);
+
+            PreparedStatement ps;
+            ResultSet rs;
+            ConexionMYSQL con = new ConexionMYSQL();
+            con.ConectarBasedeDatos();
+
+            String SQL = "SELECT id, dia, apertura, cierre FROM horario";
+
+            ps = con.conexion.prepareStatement(SQL);
+            rs = ps.executeQuery();
+
+            ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
+            int cantidadcolumna = rsMd.getColumnCount();
+            modelo.addColumn("ID");
+            modelo.addColumn("Dia");
+            modelo.addColumn("Apertura");
+            modelo.addColumn("Cierre");
+            while (rs.next()) {
+                Object[] filas = new Object[cantidadcolumna];
+
+                for (int i = 0; i < cantidadcolumna; i++) {
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -29,75 +72,86 @@ public class ConsultarHorarioAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        actualizarHorario = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaHorario = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        jButton2.setText("Volver");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        actualizarHorario.setText("Actualizar Horario");
+        actualizarHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                actualizarHorarioActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaHorario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"12:00 - 00:00", "12:00 - 00:00", "12:00 - 00:00", "12:00 - 00:00", "12:00 - 00:00", "12:00 - 00:00", "Cerrado"},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"
+                "ID", "Dia", "Apertura", "Cierre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaHorario);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Horario Mesón Rafael Alberti ");
+
+        jButton3.setText("Volver");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(188, 188, 188))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(68, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(actualizarHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(205, 205, 205))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(297, 297, 297))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel1)
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(actualizarHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,12 +172,50 @@ public class ConsultarHorarioAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void actualizarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarHorarioActionPerformed
         // TODO add your handling code here:
+        int fila = tablaHorario.getSelectedRow();
+        int id = Integer.parseInt(this.tablaHorario.getValueAt(fila, 0).toString());
+
+        String dia = tablaHorario.getValueAt(fila, 1).toString();
+        String horario_abrir = tablaHorario.getValueAt(fila, 2).toString();
+        String horario_cerrar = tablaHorario.getValueAt(fila, 3).toString();
+
+        try {
+            PreparedStatement ps;
+            ConexionMYSQL con = new ConexionMYSQL();
+
+            con.ConectarBasedeDatos();
+            String sql;
+
+            sql = "UPDATE horario SET apertura = '" + horario_abrir + "', cierre='" + horario_cerrar + "' WHERE id = '" + id + "'";
+            try {
+                ps = con.conexion.prepareStatement(sql);
+                try {
+                    ps.executeUpdate();
+                    mostrardatos();
+                    JOptionPane.showMessageDialog(null, "Los datos del horario se han actualizado correctamente");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "No se han actualizado los datos del horario correctamente");
+
+                }
+
+            } catch (Exception e) {
+            }
+
+        } catch (Exception e) {
+
+        }
+
+
+    }//GEN-LAST:event_actualizarHorarioActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:  
         MenuAdmin ma = new MenuAdmin();
         ma.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,10 +253,11 @@ public class ConsultarHorarioAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton actualizarHorario;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaHorario;
     // End of variables declaration//GEN-END:variables
 }

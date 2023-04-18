@@ -55,11 +55,9 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                   <Component id="btn_volver" min="-2" pref="113" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Component id="btn_actualizarReserva" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btn_actualizarReserva1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                                   <Component id="eliminarReserva" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane1" min="-2" pref="739" max="-2" attributes="0"/>
@@ -81,7 +79,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="eliminarReserva" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="btn_volver" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="btn_actualizarReserva" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="btn_actualizarReserva1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
@@ -175,17 +172,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_volverActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_actualizarReserva">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Agregar Reserva"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_actualizarReservaActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

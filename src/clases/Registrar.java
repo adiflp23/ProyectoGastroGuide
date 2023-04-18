@@ -22,6 +22,19 @@ public class Registrar extends javax.swing.JFrame {
         setResizable(false);
     }
 
+    public void limpiar() {
+        txtfield_dni.setText("");
+        txtfield_nickname.setText("");
+        txt_contrasena.setText("");
+        txt_concontrasena.setText("");
+        txtfield_nombre.setText("");
+        txtfield_apellidos.setText("");
+        txtfield_email.setText("");
+        txtfield_tlf.setText("");
+        txt_tipo.setText("");
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,13 +62,13 @@ public class Registrar extends javax.swing.JFrame {
         txtfield_email = new javax.swing.JTextField();
         txtfield_apellidos = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txt_contrasenausuario = new javax.swing.JPasswordField();
+        txt_contrasena = new javax.swing.JPasswordField();
         txtfield_tlf = new javax.swing.JTextField();
         btn_volver = new javax.swing.JButton();
         btn_registrar1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_tipo = new javax.swing.JTextField();
-        txt_pass = new javax.swing.JPasswordField();
+        txt_concontrasena = new javax.swing.JPasswordField();
 
         txtfield_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,9 +151,9 @@ public class Registrar extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Contraseña");
 
-        txt_contrasenausuario.addActionListener(new java.awt.event.ActionListener() {
+        txt_contrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_contrasenausuarioActionPerformed(evt);
+                txt_contrasenaActionPerformed(evt);
             }
         });
 
@@ -193,12 +206,14 @@ public class Registrar extends javax.swing.JFrame {
                                     .addComponent(btn_registrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(99, 99, 99)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(jLabel9)
-                                .addGap(27, 27, 27))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(110, 110, 110)
-                                .addComponent(jLabel1)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(53, 53, 53)
+                                        .addComponent(jLabel9))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(110, 110, 110)
+                                        .addComponent(jLabel1)))
+                                .addGap(27, 27, 27)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtfield_email, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -206,10 +221,10 @@ public class Registrar extends javax.swing.JFrame {
                             .addComponent(txtfield_nickname, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(txtfield_apellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(txtfield_dni, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(txt_contrasenausuario)
+                            .addComponent(txt_contrasena)
                             .addComponent(txtfield_tlf)
                             .addComponent(txt_tipo)
-                            .addComponent(txt_pass))
+                            .addComponent(txt_concontrasena))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -228,12 +243,12 @@ public class Registrar extends javax.swing.JFrame {
                     .addComponent(txtfield_nickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_contrasenausuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_concontrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -308,76 +323,80 @@ public class Registrar extends javax.swing.JFrame {
         Login lg = new Login();
         lg.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_btn_volverActionPerformed
 
     private void btn_registrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar1ActionPerformed
         // TODO add your handling code here:
-        
+        if (txtfield_dni.getText().isEmpty() || txtfield_nickname.getText().isEmpty() || txtfield_nombre.getText().isEmpty() || txtfield_apellidos.getText().isEmpty() || txtfield_email.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Completa Los Campos Vacíos");
+        }
         try {
-            PreparedStatement ps; 
-           ConexionMYSQL con = new ConexionMYSQL();
-           
-           con.ConectarBasedeDatos();
-        String DNI = txtfield_dni.getText();
-        String usuario = txtfield_nickname.getText();
-        String contrasena = String.valueOf(txt_contrasenausuario.getPassword());
-        String concontrasena = String.valueOf(txt_pass.getPassword());
-        String nombre = txtfield_nombre.getText();
-        String apellido = txtfield_apellidos.getText();
-        String email = txtfield_email.getText();
-        int telefono = Integer.parseInt(txtfield_tlf.getText());
-        String codigo = txt_tipo.getText();
-        String ADM = "colega";
-           
-          String sql;
+            PreparedStatement ps;
+            ConexionMYSQL con = new ConexionMYSQL();
 
-           sql = "insert into usuarios(DNI, usuario, contrasena, nombre, apellido, email, telefono, tipo_usuario) values(?,?,?,?,?,?,?,?)";
+            con.ConectarBasedeDatos();
+            String DNI = txtfield_dni.getText();
+            String usuario = txtfield_nickname.getText();
+            String contrasena = String.valueOf(txt_contrasena.getPassword());
+            String concontrasena = String.valueOf(txt_concontrasena.getPassword());
+            String nombre = txtfield_nombre.getText();
+            String apellido = txtfield_apellidos.getText();
+            String email = txtfield_email.getText();
+            int telefono = Integer.parseInt(txtfield_tlf.getText());
+            String codigo = txt_tipo.getText();
+            String ADM = "colega";
+
+            String sql;
+
+            sql = "insert into usuarios(DNI, usuario, contrasena, nombre, apellido, email, telefono, tipo_usuario) values(?,?,?,?,?,?,?,?)";
             try {
-                 ps = con.conexion.prepareStatement(sql);
+                ps = con.conexion.prepareStatement(sql);
 
-           ps.setString(1, DNI);
+                ps.setString(1, DNI);
 
-           ps.setString(2, usuario);
+                ps.setString(2, usuario);
 
-           ps.setString(3, contrasena);
-           
-           ps.setString(4, nombre);
-           
-           ps.setString(5, apellido);
-           
-           ps.setString(6, email);
-           
-           ps.setInt(7, telefono);
-           
-           if(codigo.equals(ADM)){
-               ps.setInt(8, 1);    
-           }else{
-               ps.setInt(8, 0);
-           }
-           
-           if(contrasena.equals(concontrasena)){
-            
-               try {
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente");
-                } catch (Exception e) {
-                    System.out.println("ERROR USUARIO NO INSERTADO");
-                }   
-           }
-                
-                
+                ps.setString(3, contrasena);
+
+                ps.setString(4, nombre);
+
+                ps.setString(5, apellido);
+
+                ps.setString(6, email);
+
+                ps.setInt(7, telefono);
+
+                if (codigo.equals(ADM)) {
+                    ps.setInt(8, 1);
+                } else {
+                    ps.setInt(8, 0);
+                }
+
+                if (contrasena.equals(concontrasena)) {
+
+                    try {
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente");
+                    } catch (Exception e) {
+                        System.out.println("ERROR USUARIO NO INSERTADO");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden. El Usuario No Ha Sido Creado");
+                }
+
             } catch (Exception e) {
-            } 
-           
-           
+            }
+
         } catch (Exception e) {
         }
+
+        limpiar();
     }//GEN-LAST:event_btn_registrar1ActionPerformed
 
-    private void txt_contrasenausuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_contrasenausuarioActionPerformed
+    private void txt_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_contrasenaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_contrasenausuarioActionPerformed
+    }//GEN-LAST:event_txt_contrasenaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -429,8 +448,8 @@ public class Registrar extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
-    public javax.swing.JPasswordField txt_contrasenausuario;
-    public javax.swing.JPasswordField txt_pass;
+    public javax.swing.JPasswordField txt_concontrasena;
+    public javax.swing.JPasswordField txt_contrasena;
     public javax.swing.JTextField txt_tipo;
     public javax.swing.JTextField txtfield_apellidos;
     public javax.swing.JTextField txtfield_dni;

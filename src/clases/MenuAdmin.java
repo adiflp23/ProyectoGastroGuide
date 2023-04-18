@@ -203,6 +203,9 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private void btn_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ayudaActionPerformed
         // TODO add your handling code here:
+        ayudaAdmin aa = new ayudaAdmin();
+        aa.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btn_ayudaActionPerformed
 
     /**

@@ -83,7 +83,6 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         eliminarReserva = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
-        btn_actualizarReserva = new javax.swing.JButton();
         btn_actualizarReserva1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,13 +131,6 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
             }
         });
 
-        btn_actualizarReserva.setText("Agregar Reserva");
-        btn_actualizarReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_actualizarReservaActionPerformed(evt);
-            }
-        });
-
         btn_actualizarReserva1.setText("Actualizar Reserva");
         btn_actualizarReserva1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,11 +153,9 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(54, 54, 54)
-                                .addComponent(btn_actualizarReserva)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_actualizarReserva1)
-                                .addGap(60, 60, 60)
+                                .addGap(173, 173, 173)
                                 .addComponent(eliminarReserva))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 739, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(22, 22, 22))))
@@ -181,7 +171,6 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eliminarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_actualizarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_actualizarReserva1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43))
         );
@@ -215,8 +204,6 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
            sql = "DELETE FROM reservas WHERE id_reservas ='"+valor+"'";
             try {
                  ps = con.conexion.prepareStatement(sql);
-
-            //AQUÍ EN EL SEGUNDO TRY SE EJECUTARA LA SENTENCIA sql Y SI SE HA EJECUTADO CORRECTAMENTE NOS APARECERÁ UN JOPTION CON QUE SE HA ELIMINADO LA PELICULA CORRECTAMENTE
                 try {
                     ps.executeUpdate();
                     mostrardatos();
@@ -243,12 +230,47 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btn_volverActionPerformed
 
-    private void btn_actualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarReservaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_actualizarReservaActionPerformed
-
     private void btn_actualizarReserva1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarReserva1ActionPerformed
         // TODO add your handling code here:
+        int fila = tablaReservas.getSelectedRow();
+        
+        if(fila < 1) {
+            JOptionPane.showMessageDialog(null, "Selecciona un registro antes de darle a actualizar");
+        }
+        
+        int id = Integer.parseInt(this.tablaReservas.getValueAt(fila, 0).toString());
+        
+        String dni = tablaReservas.getValueAt(fila, 1).toString();
+        String fecha_reserva = tablaReservas.getValueAt(fila, 2).toString();
+        String mesa = tablaReservas.getValueAt(fila, 3).toString();
+        String comensales = tablaReservas.getValueAt(fila, 4).toString();
+        
+        try {
+           PreparedStatement ps; 
+           ConexionMYSQL con = new ConexionMYSQL();
+           
+           con.ConectarBasedeDatos();           
+           String sql;
+
+           sql = "UPDATE reservas SET DNI = '"+dni+"', fecha_reserva='"+fecha_reserva+"', mesa='"+mesa+"', comensales='"+comensales+"' WHERE id_reservas = '"+id+"'";
+            try {
+                 ps = con.conexion.prepareStatement(sql);
+                try {
+                    ps.executeUpdate();
+                    mostrardatos();
+                    JOptionPane.showMessageDialog(null, "Los datos de la reserva se han actualizado correctamente");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "No se han actualizado los datos de la reserva correctamente");
+
+                }
+                
+            } catch (Exception e) {
+            }
+                   
+        } catch (Exception e) {
+             
+        }
+        
     }//GEN-LAST:event_btn_actualizarReserva1ActionPerformed
 
     /**
@@ -287,7 +309,6 @@ public class ConsultarReservasAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btn_actualizarReserva;
     public javax.swing.JButton btn_actualizarReserva1;
     public javax.swing.JButton btn_volver;
     public javax.swing.JButton eliminarReserva;
